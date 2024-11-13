@@ -12,6 +12,7 @@ const REDIS_DB = process.env.REDIS_DB ?? "0:default";
 const REDIS_USERNAME = process.env.REDIS_USERNAME;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 const REDIS_CA = process.env.REDIS_CA;
+const REDIS_TIMEOUT = Number.parseInt(process.env.REDIS_TIMEOUT ?? 10000);
 
 const app = fastify({ logger: true });
 
@@ -34,6 +35,7 @@ const redis = new Redis({
   password: REDIS_PASSWORD,
   maxRetriesPerRequest: null,
   offlineQueue: false,
+  connectTimeout: REDIS_TIMEOUT,
   tls: REDIS_CA ? { ca: Buffer.from(REDIS_CA, "base64"), rejectUnauthorized: true } : undefined
 });
 

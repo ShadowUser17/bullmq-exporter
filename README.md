@@ -30,6 +30,7 @@ docker logout "${AWS_ECR_NAME}"
 - `REDIS_PASSWORD` - Redis password
 - `REDIS_DB` - Redis databases (comma separated list of colon separated tuples `index:alias`) (default: `0:default`)
   - For example `0:staging,1:sandbox`, the alias will be used as a label
+- `REDIS_TIMEOUT` - Redis connection timeout (default: 10000)
 - `REDIS_CA` - Redis CA certificate (base64 encoded CA certificate) (default: none)
   - For example `cat ca.crt | base64`
 
