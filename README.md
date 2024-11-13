@@ -1,19 +1,26 @@
-# bullmq-prometheus
+### BullMQ Prometheus Exporter
 
-Prometheus metrics exporter for BullMQ
-
-<p align="center">
-  <img src="./media/splash.png" width="400" />
-<p>
-
-## Start
-
+#### Publish docker image to AWS/ECR:
 ```bash
-docker run -it -p 3000:3000 -e REDIS_HOST=host.docker.internal igrek8/bullmq-prometheus
+python3 -m venv --upgrade-deps env && \
+./env/bin/pip3 install -r requirements_dev.txt
+```
+```bash
+export IMAGE_NAME=""
+export IMAGE_TAG=""
+export AWS_ECR_NAME=""
+export AWS_DEFAULT_REGION=""
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+```
+```bash
+./env/bin/python3 push_aws_ecr.py
+```
+```bash
+docker logout "${AWS_ECR_NAME}"
 ```
 
-## Environments
-
+#### Variables:
 - `HOST` - HTTP server host (default: 0.0.0.0)
 - `PORT` - HTTP server port (default: 3000)
 - `PROM_PREFIX` - Prometheus metric prefix (default: bull)
@@ -26,8 +33,7 @@ docker run -it -p 3000:3000 -e REDIS_HOST=host.docker.internal igrek8/bullmq-pro
 - `REDIS_CA` - Redis CA certificate (base64 encoded CA certificate) (default: none)
   - For example `cat ca.crt | base64`
 
-## Endpoints
-
+#### Endpoints:
 - `/metrics` - Prometheus metrics
   - `HTTP 200` - Metrics per queue
     - `active_total` - Number of jobs in processing
@@ -41,8 +47,7 @@ docker run -it -p 3000:3000 -e REDIS_HOST=host.docker.internal igrek8/bullmq-pro
   - `HTTP 200` - Redis is available
   - `HTTP 503` - Redis is unavailable
 
-## Example
-
+#### Example:
 ```
 # HELP bull_active_total Number of jobs in processing
 # TYPE bull_active_total gauge
